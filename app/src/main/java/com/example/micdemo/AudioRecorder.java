@@ -9,12 +9,11 @@ import android.os.Environment;
 
 
 public class AudioRecorder {
-
     final MediaRecorder recorder = new MediaRecorder();
     public final String path;
-
+    MediaPlayer mp;
     public AudioRecorder(String path) {
-        this.path = sanitizePath(path);
+        this.path = path;/*sanitizePath(path);*/
     }
 
     private String sanitizePath(String path) {
@@ -60,5 +59,28 @@ public class AudioRecorder {
         mp.prepare();
         mp.start();
         mp.setVolume(10, 10);
+    }
+    public void playarcoding() throws IOException {
+        if (mp==null)
+        {
+            mp = new MediaPlayer();
+        }
+        mp.setDataSource(path);
+        mp.prepare();
+        mp.start();
+//        mp.setVolume(10, 10);
+    }
+
+    public void stopMediaPlayer() throws IOException {
+        if (mp==null)
+        {
+            return;
+        }
+        if (mp.isPlaying())
+        {
+            mp.stop();
+            mp.release();
+        }
+//        mp.setVolume(10, 10);
     }
 }
